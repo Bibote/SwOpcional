@@ -7,24 +7,12 @@
   if (isset($_SESSION['sesion'])){
     $usuario=($_SESSION['sesion']);
     $tipo=$_SESSION['tipo'];
-    $conn = mysqli_connect($server, $user, $pass, $basededatos);
-
-    if (!$conn){
-      die("Connection failed: " . mysqli_connect_error());
+    if($_SESSION['foto']!=null) {
+      $foto= "data:image/jpeg;base64,".base64_encode ($_SESSION['foto'])."";
     }
-
-    $sql = "SELECT foto FROM Usuarios Where email='$usuario'";
-    $result = mysqli_query($conn, $sql);
-    if (mysqli_num_rows($result) > 0) {
-      $row = mysqli_fetch_assoc($result);
-      $foto= "data:image/jpeg;base64,".base64_encode ($row['foto'])."";
+    else {
+      $foto='../images/anonimo.jpeg';
     }
-    
-    if($row['foto']==null) {
-      
-      $foto="../images/anonimo.jpeg";
-     }
-    
   }
   
   echo "<header class='main' id='h1'>";

@@ -89,23 +89,23 @@
          }
           else {
             $link = mysqli_connect ($server, $user, $pass, $basededatos);
-           $sql1="SELECT email FROM Preguntas WHERE email='$email' ";
-           $result=null;
-            $result = mysqli_query($link,$sql1);
-           if(isset($result)) {
-              $sql2="INSERT INTO Usuarios
-                 (tipo,email,nombre,apellidos,contraseña,foto,estado) VALUES ('$select','$email','$nombre','$apellido','$encriptada','$foto','Activada')";
-              if (!mysqli_query($link, $sql2)){
+            $sql1="SELECT email FROM Preguntas WHERE email='$email' ";
+            $result=null;
+             $result = mysqli_query($link,$sql1);
+            if(isset($result)) {
+               $sql2="INSERT INTO Usuarios
+                  (tipo,email,nombre,apellidos,contraseña,foto,estado) VALUES ('$select','$email','$nombre','$apellido','$encriptada','$foto','Activada')";
+               if (!mysqli_query($link, $sql2)){
+                 mysqli_close($link);
+                 echo "<span style='color:red'>Se ha producido algun error, vuelve a intentarlo</span>";
+                echo "<a href='javascript:history.back();'>Atrás</a>";
+              }else{
                 mysqli_close($link);
-                echo "<span style='color:red'>Se ha producido algun error, vuelve a intentarlo</span>";
-               echo "<a href='javascript:history.back();'>Atrás</a>";
-             }else{
-               mysqli_close($link);
-                echo "<span style='color:blue'>Usuario creado</span>";
-              }
-            }
+                 echo "<span style='color:blue'>Usuario creado</span>";
+               }
+             }
               else{
-                mysqli_close($link);
+                $dbh = null;
                 echo "<span style='color:red'>Este usuario ya existe</span>";
 
                }  

@@ -57,9 +57,17 @@
           mysqli_close($link);
           if(mysqli_num_rows($result) > 0) {
             $usuario=mysqli_fetch_assoc($result);
+            if($usuario['Estado']=='Activada') {
             $_SESSION['sesion']=$email;
-
             $_SESSION['tipo']=$usuario['tipo'];
+
+            if($usuario['foto']==null) {
+      
+              $foto=null;
+             }
+            else {
+              $_SESSION['foto']=$usuario['foto'];
+            }
 
             echo" 
             <script languaje='javascript'> 
@@ -67,6 +75,15 @@
               location.href='Layout.php';
             </script>
             ";
+            }
+            else {
+              echo" 
+            <script languaje='javascript'> 
+              alert('El $email se encuentra bloqueado');
+              location.href='Layout.php';
+            </script>
+            ";
+            }
           }
           else{
             echo ("Par&aacute;metros de login incorrectos ");

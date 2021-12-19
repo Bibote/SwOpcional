@@ -13,8 +13,8 @@
 <body>
   <?php include '../php/Menus.php' ?>
   <section class="main" id="s1">
-  <script>setInterval (showUserCount(), 10000); </script>
-    <div id=usuarios>
+  
+    <div id=total>
     </div>
     <div>
     <?php
@@ -23,7 +23,7 @@
       <form id='fquestion' name='fquestion' action='AddQuestion.php' method='POST' enctype='multipart/form-data'>
       <label for="email">Email*:</label> 
       <?php
-      echo "<input type='text' id='email' name='email' value='$usuario'><br>";
+      echo "<p id='email' name='email'>$usuario</p><br>";
       ?>
       <label for="ePregunta">Enunciado de la pregunta:*:</label> 
       <input type="text" id="ePregunta" name="ePregunta" ><br>
@@ -48,6 +48,21 @@
       <input type="button" id="verPreguntas" value="verPreguntas" onclick="showQuestions()"><br>
 
     </form>
+    <script>
+      setInterval(verTot, 1000);
+    
+      function verTot() {
+
+    XMLHttp= new XMLHttpRequest();
+    XMLHttp.onreadystatechange = function() {
+        if (XMLHttp.readyState==4 && XMLHttp.status==200){
+            document.getElementById("total").innerHTML=XMLHttp.responseText;
+        }
+    }
+XMLHttp.open("GET","QuestionInfo.php", true);
+XMLHttp.send();
+}
+    </script>
     </div>
     <div id="exito" style="display:none">
             La pregunta se ha guardado correctamente.
@@ -58,7 +73,6 @@
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
   <script src="../js/AddQuestionsAjax.js"></script>
   <script src="../js/ViewQuestionsAjax.js"></script>
-  <script src="../js/ViewUserCount.js"></script>
 
 </body>
 </html>

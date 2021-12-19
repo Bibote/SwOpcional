@@ -1,9 +1,8 @@
 <?php
+session_start();
 
 $errores = '';
 
-      $regexA = '/^[a-zA-Z]+[0-9]{3}@ikasle\.ehu\.((eus)|(es))$/i';
-      $regexP = '/^[a-zA-Z][\.[a-zA-Z]+]*@ehu\.((eus)|(es))$/i';
      
       $post = (isset($_POST['respuesta2']) && !empty($_POST['respuesta2'])) &&
               (isset($_POST['respuesta3']) && !empty($_POST['respuesta3'])) &&
@@ -11,7 +10,7 @@ $errores = '';
               (isset($_POST['tema']) && !empty($_POST['tema']));
 
 
-      $email = $_POST['email'];
+
       $ePregunta = $_POST['ePregunta'];
 
       if ($post) {
@@ -27,9 +26,7 @@ $errores = '';
       if (strlen($ePregunta)<10){
         $errores = "El servidor dice que el enunciado debe tener por lo menos 10 caracteres";
       }
-      if ((preg_match($regexA, $email) || preg_match($regexP, $email))!=1) {
-        $errores = "El servidor dice que el email es incorrecto";
-      }
+
 ?>
 
 <!DOCTYPE html>
@@ -45,7 +42,7 @@ $errores = '';
    
     <?php
     if ($errores == ''){
-        
+      $email=$_SESSION['sesion'];  
       $xml = simplexml_load_file('../xml/Questions.xml');
       $assessmentItem = $xml->addChild('assessmentItem');
       $assessmentItem->addAttribute('subject',$tema);
